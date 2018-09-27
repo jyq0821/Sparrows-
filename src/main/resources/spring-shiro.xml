@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+   http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+       <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager"> 
+	            <property name="realm" ref="shiroUserRealm"></property>  
+	   </bean>
+	   <bean id="logoutFilter" class="org.apache.shiro.web.filter.authc.LogoutFilter">
+	         <property name="redirectUrl" value="/signin"></property>
+	   </bean>
+	    <bean id="shiroFilterFactoryBean" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+			<property name="securityManager" ref="securityManager"></property>   
+			<property name="loginUrl" value="/signin"></property>
+			<property name="filterChainDefinitionMap">
+				<map>
+				     <!-- <entry key="/css/**" value="anon"></entry>
+				     <entry key="/img/**" value="anon"></entry>
+				     <entry key="/js/**" value="anon"></entry>
+				     <entry key="/fonts/**" value="anon"></entry>
+				     <entry key="/" value="anon"></entry>
+				     <entry key="/api/loginCheck" value="anon"></entry> -->
+				     <entry key="/signout" value="logout"></entry>
+				     <entry key="/reply/add" value="authc"></entry>
+				     <entry key="/topic/add" value="authc"></entry>
+				     <entry key="/doCollectTopic/**" value="authc"></entry>
+				     <entry key="/**" value="anon"></entry>
+				</map>
+			</property>
+			<property name="filters">
+				<map>
+				<entry key="logout" value-ref="logoutFilter"/>
+				</map>
+			</property>
+	   </bean>
+   	   <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+	   			
+	   </bean>
+	   <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor">
+	
+	   </bean>
+	   <bean id="" class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" 
+	            depends-on="lifecycleBeanPostProcessor">
+	   </bean>
+</beans>

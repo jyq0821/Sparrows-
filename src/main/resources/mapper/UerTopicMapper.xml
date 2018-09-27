@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.withstars.dao.UserTopicMapper" >
+
+	<insert id="insertCollection">
+	insert into user_topics_collections
+	(user_id,topic_id) 
+	values(#{userId},#{topicId})
+	</insert>
+
+	<delete id="deleteCollectionById">
+	delete from user_topics_collections
+	where ${fieldName}=#{Id}
+	</delete>
+	<select id="exactQuery" resultType="int">
+	select count(*) from user_topics_collections
+	where user_id=#{userId} and topic_id=#{topicId}
+	</select>
+</mapper>

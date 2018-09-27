@@ -46,7 +46,7 @@ public class LogAspect {
     @Pointcut("@annotation(com.withstars.anno.RequestLog)")
     public void logPointCut(){}
     @Around("logPointCut()")
-    public Object aroundLogin(ProceedingJoinPoint //连接点
+    public  Object  aroundLogin（ProceedingJoinPoint  // a啊啊啊
     		jpt) throws Throwable{
     	long startTime=System.currentTimeMillis();
     	Object result=jpt.proceed();
